@@ -38,17 +38,29 @@ function showTrips() {
             }
             return response.json();
         })
-        .then(data => {
-            const list = document.getElementById('allTrips');
+        .then(async data => {
+            const mainDiv = document.getElementById('allTrips');
+            const gridDiv = document.createElement('div');
+            gridDiv.classList.add("row", "row-cols-1", "row-cols-sm-2", "row-cols-md-3", "justify-content-center", "g-4");
 
-            data.forEach(trip => {
-                const mainDiv = document.createElement('div');
-                mainDiv.classList.add("card", "my-3", "shadow");
-                mainDiv.style.cursor = "pointer";
+            for (const trip of data) {
 
-                mainDiv.addEventListener("click", () => {
+                const col = document.createElement('div');
+                col.classList.add("col");
+
+                const card = document.createElement('div');
+                card.classList.add("card", "shadow");
+                card.style.cursor = "pointer";
+                card.style.width = "17rem";
+
+                card.addEventListener("click", () => {
                     window.location.href = `trip-details.html?id=${trip.id}`;
                 });
+
+                const image = document.createElement('img');
+                image.src = await getPhoto(`${trip.name}`);
+                image.classList.add("card-img-top");
+                image.style.height = "14rem";
 
                 const cardBody = document.createElement('div');
                 cardBody.classList.add("card-body");
@@ -68,8 +80,11 @@ function showTrips() {
                 cardBody.appendChild(nameTag);
                 cardBody.appendChild(divStart);
                 cardBody.appendChild(divEnd);
-                mainDiv.appendChild(cardBody);
-                list.appendChild(mainDiv);
-            })
+                card.appendChild(image);
+                card.appendChild(cardBody);
+                col.appendChild(card);
+                gridDiv.appendChild(col);
+            }
+            mainDiv.appendChild(gridDiv);
         })
 }
