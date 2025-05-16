@@ -30,6 +30,8 @@ use a simple HTTP server (e.g., Live Server in VSCode).
 
 The frontend communicates with the backend via REST API.
 
+In file main.html use your API key.
+
 ### Planned improvements
 - Integration with Google Maps API (for route and location display)
 - UI enhancements (Frontend)
